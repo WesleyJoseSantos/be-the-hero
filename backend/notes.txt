@@ -1,0 +1,84 @@
+1 - Inicializando projeto nodejs:
+
+a) npm init -y     
+
+/*Cria um arquivo chamado package.json
+Contém informações cruciais do projeto
+Scripts personalizado
+Dependencias do projeto*/
+
+b) npm install express
+
+/*Instala o módulo express com suas dependencias
+Auxilia no gerenciamento das rotas da aplicação
+Cria um arquivo package-lock.json (cash de dependencias)*/
+
+c) Criar arquivo index.js:
+
+const express = require('express');
+
+const app = express();
+
+app.listen(3333);
+
+/*Arquivo principal do projeto*/
+
+d) Executar projeto para testar
+
+node index.js
+
+/*Executa o arquivo index.js
+Pode ser chamado por localhost:3333*/
+
+2 - Inicializando projeto reactJS
+
+a) cd..
+
+/*Retorna para o diretório anterior*/
+
+b) npx create-react-app frontend
+
+3 - Instalando nodemon: 
+
+a) npm install nodemon -D
+
+b) criar script para rodar o nodemon: "start": "nodemon index.js"
+
+4 - Configurando banco de dados
+
+a) npm install knex
+
+b) npm install sqlite3
+
+5 - Fazer a conexão com o banco de dados
+
+a) npx knex init
+
+b) criar diretório: src/database/migrations/
+
+c) adicionar diretório na chave knexfile.js -> development: 'migrations': {directory: './src/database/migrations'}
+
+e) npx knex migrate:make create_ongs
+
+f) criar chave: useNullAsDefault: true, em development.
+
+g) criar a tabela no arquivo da pasta migrations:
+
+exports.up = function(knex) {
+  knex.schema.createTable('ongs', function(table) {
+      table.string('id').primary();
+      table.string('name').notNullable();
+      table.string('email').notNullable();
+      table.string('whatsapp').notNullable();
+      table.string('city').notNullable();
+      table.string('uf', 2).notNullable();
+  })
+};
+
+exports.down = function(knex) {
+    knex.schema.dropTable('ongs');
+};
+
+h)npx knex migrate:latest
+
+i)para desfazer a ultima ação no banco de dados: npx knex migrate:rollback
